@@ -1,6 +1,3 @@
-def transpose(A):
-  return [A[j][i] for j in range(len(A)) for i in range(len(A[0]))]
-
 def multiply(A, B):
   rows, cols, dim = len(A), len(B[0]), len(B)
   return [[sum(A[i][k] * B[k][j] for k in range(dim)) for j in range(cols)] for i in range(rows)]
@@ -20,7 +17,7 @@ def scalar_multiply(v, c):
 def make_similar(A):
   n = len(A)
   Q, R = qr_decomposition(A)
-  return multiply(Q, R)
+  return multiply(R, Q)
 
 def qr_decomposition(A):
     n = len(A)
@@ -37,7 +34,7 @@ def qr_decomposition(A):
         R[i][i] = norm(vi)
         Q[i] = scalar_multiply(vi, 1 / R[i][i])
 
-    Q_cols = transpose(Q)
+    Q_cols = list(map(list, zip(*Q)))
     return Q_cols, R
 
 # Frobenius norm of off-diagonal elements
